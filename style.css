@@ -1,13 +1,72 @@
 * {
     margin: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
 }
 
 body {
-    background: linear-gradient(10deg, #666666, #999999);
+    background-image: url("pngtree-tetris-wallpaper-hd-1080p-picture-image_2779801.jpg");
+    background-size: cover;
     height: 100vh;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+    position: relative;
+    text-transform: uppercase;
+}
+
+h2{
+    color: #222;
+    background: linear-gradient(90deg, #0f0, #1899ff, #f0f, #f00, #ff0 90%);
+    -webkit-background-clip: text;
+    -webkit-text-stroke: 0.04em transparent;
+    font-size: 5em;
+    animation: animate 1.5s linear infinite;
+}
+h2::before{
+    content: attr(data-text);
+    position: absolute;
+    left: 0;
+    color: #222;
+    background: linear-gradient(90deg, #0f0, #1899ff, #f0f, #f00, #ff0 90%);
+    -webkit-background-clip: text;
+    -webkit-text-stroke: 0.04em transparent;
+    transform: translate(-10px, -10px);
+    z-index: -1;
+    opacity: 0.1;
+}
+h2::after{
+    content: attr(data-text);
+    position: absolute;
+    left: 0;
+    color: #222;
+    background: linear-gradient(90deg, #0f0, #1899ff, #f0f, #f00, #ff0 90%);
+    -webkit-background-clip: text;
+    -webkit-text-stroke: 0.04em transparent;
+    transform: translate(-20px, -20px);
+    z-index: -1;
+    opacity: 0.05;
+}
+@keyframes animate{
+    0%
+    {
+        filter: hue-rotate(0deg);
+    }
+    100%
+    {
+        filter: hue-rotate(360deg);
+    }
+}
+
+h2:last-child{
+    display: flex;
+    font-size: 5em;
+}
+h2:last-child:hover p{
+    opacity: 0;
+    filter: blur(30px);
+    transform: rotate(45deg) translateY(-200px);
 }
 
 .grid {
@@ -26,29 +85,29 @@ body {
 }
 
 .grid .O {
-    background-color: #F4F440;
+    background: linear-gradient(45deg, #0033ff, #0cff00);
 }
 
 .grid .J {
-    background-color: #0000C8;
+    background: linear-gradient(45deg, #0000C8, #f9280e);
 }
 
 .grid .L {
-    background-color: #E29F1A;
+    background: linear-gradient(45deg, #f90f71, #3c19e5);
 }
 
 .grid .I {
-    background-color: #20f2f2;
+    background: linear-gradient(45deg, #0dffff, #f900a9);
 }
 
 .grid .S {
-    background-color: #7cf801;
+    background: linear-gradient(45deg, #7cf801, #ff0000);
 }
 
 .grid .Z {
-    background-color: #D71414FF;
+    background: linear-gradient(45deg, #D71414FF, #21fd00);
 }
 
 .grid .T {
-    background-color: #a22bd7;
+    background: linear-gradient(45deg, #9200d3, #01fb47);
 }
