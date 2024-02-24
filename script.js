@@ -13,9 +13,9 @@ const TETROMINOES = {
         [0, 0, 0]
     ],
     'L': [
+        [0, 0, 0],
         [1, 1, 1],
-        [1, 0, 0],
-        [0, 0, 0]
+        [1, 0, 0]
     ],
     'I': [
         [0, 0, 0, 0],
@@ -34,9 +34,9 @@ const TETROMINOES = {
         [0, 0, 0]
     ],
     'T': [
+        [0, 0, 0],
         [1, 1, 1],
-        [0, 1, 0],
-        [0, 0, 0]
+        [0, 1, 0]
     ]
 
 }
@@ -80,8 +80,9 @@ function placeTetromino() {
     const matrixSize = tetromino.matrix.length;
     for (let row = 0; row < matrixSize; row++) {
         for (let column = 0; column < matrixSize; column++) {
-            if(tetromino)
+            if(tetromino.matrix[row][column]) {
                 playfield[tetromino.row + row][tetromino.column + column] = tetromino.name;
+            }
         }
     }
     generateTetromino();
@@ -110,18 +111,20 @@ function drawTetromino() {
 
     for (let row = 0; row < tetrominoMatrixSize; row++) {
         for (let column = 0; column < tetrominoMatrixSize; column++) {
+            //посмотреть как работает rotateMatrix()!!!
+            /*const cellIndex = convertPositionToIndex(
+                tetromino.row + row,
+                tetromino.column + column
+            );
+            cells[cellIndex].innerHTML = showRotated[row][column];*/
             if(!tetromino.matrix[row][column]) continue;
             const cellIndex = convertPositionToIndex(
                 tetromino.row + row,
                 tetromino.column + column
             );
-            // console.log(cellIndex);
-            cells[cellIndex].innerHTML = showRotated[row][column];
             cells[cellIndex].classList.add(name);
         }
-        // column
     }
-    // row
 }
 
 function draw() {
@@ -130,26 +133,29 @@ function draw() {
     drawTetromino();
 }
 
-let showRotated = [
-    [1, 2, 3],
-    [4, 5, 6],
-    [7, 8, 9]
-]
-
 function rotateTetromino() {
     const oldMatrix = tetromino.matrix;
     const rotatedMatrix = rotateMatrix(tetromino.matrix);
-    showRotated = rotateMatrix(showRotated);
+    /*showRotated = rotateMatrix(showRotated);*/
     tetromino.matrix = rotatedMatrix;
+    if(!isValid()) {
+        tetromino.matrix = oldMatrix;
+    }
 }
+
 draw();
+
+function rotate() {
+    rotateTetromino();
+    draw()
+}
 
 document.addEventListener('keydown', onKeyDown);
 
 function onKeyDown(e) {
     switch (e.key) {
         case 'ArrowUp':
-            rotateTetromino();
+            rotate();
             break;
         case 'ArrowDown':
             moveTetrominoDown();
@@ -164,13 +170,13 @@ function onKeyDown(e) {
     draw();
 }
 
-function rotateMatrix(matrixTetramino) {
-    const N = matrixTetramino.length;
+function rotateMatrix(matrixTetromino) {
+    const N = matrixTetromino.length;
     const rotateMatrix = [];
     for (let i = 0; i < N; i++) {
         rotateMatrix[i] = []
         for (let j = 0; j < N; j++) {
-            rotateMatrix[i][j] = matrixTetramino[N - j - 1][i]
+            rotateMatrix[i][j] = matrixTetromino[N - j - 1][i]
         }
     }
     return rotateMatrix
@@ -202,11 +208,11 @@ function isValid() {
     const matrixSize = tetromino.matrix.length;
     for (let row = 0; row < matrixSize; row++) {
         for (let column = 0; column < matrixSize; column++) {
-            if(tetromino.matrix[row][column]) continue;
+            /*if(tetromino.matrix[row][column]) continue;*/
             if(isOutsideOfGameboard(row, column)) {
                 return false
             }
-            if(hssCollisions(row, column)) {
+            if(hasCollisions(row, column)) {
                 return false
             }
         }
@@ -215,13 +221,15 @@ function isValid() {
 }
 
 function isOutsideOfGameboard(row, column) {
-    return tetromino.column + column < 0
-        || tetromino.column + column >= PLAYFIELD_COLUMNS
-        || tetromino.row + row >= PLAYFIELD_ROWS;
+    return tetromino.matrix[row][column]
+        && (tetromino.column + column < 0
+            || tetromino.column + column >= PLAYFIELD_COLUMNS
+            || tetromino.row + row >= PLAYFIELD_ROWS);
 }
 
-function hssCollisions(row, column) {
-    return playfield[tetromino.row + row][tetromino.column + column];
+function hasCollisions(row, column) {
+    return tetromino.matrix[row][column]
+        && playfield[tetromino.row + row][tetromino.column + column];
 }
 
 
