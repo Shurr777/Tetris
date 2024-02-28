@@ -1,7 +1,6 @@
 const PLAYFIELD_COLUMNS = 10;
 const PLAYFIELD_ROWS = 20;
 const TETROMINO_NAMES = ['O', 'J', 'L', 'I', 'S', 'Z', 'T']
-
 const TETROMINOES = {
     'O': [
         [1, 1],
@@ -40,6 +39,9 @@ const TETROMINOES = {
     ]
 
 }
+const scoreElement = document.querySelector('.score');
+const linesElement = document.querySelector('.lines');
+
 
 function convertPositionToIndex(row, column) {
     return row * PLAYFIELD_COLUMNS + column;
@@ -47,6 +49,32 @@ function convertPositionToIndex(row, column) {
 
 let playfield;
 let tetromino;
+let score = 0;
+let lines = 0;
+
+function counterScore(destrLines){
+
+    switch (destrLines){
+        case 1:
+            score += 10;
+            lines += 1;
+            break;
+        case 2:
+            score += 30;
+            lines += 2;
+            break;
+        case 3:
+            score += 50;
+            lines += 3;
+            break;
+        case 4:
+            score += 100;
+            lines += 4;
+            break;
+    }
+    scoreElement.innerHTML = score;
+    linesElement.innerHTML = lines;
+}
 
 function generatePlayField() {
     for (let i = 0; i < PLAYFIELD_ROWS * PLAYFIELD_COLUMNS; i++) {
@@ -66,7 +94,7 @@ function generateTetromino() {
 
     const name = TETROMINO_NAMES[generateRandomTerminoIndex(TETROMINO_NAMES)];
     const matrix = TETROMINOES[name];
-    console.log('matrix', matrix);
+    //console.log('matrix', matrix);
     tetromino = {
         name,
         matrix,
@@ -84,7 +112,42 @@ function placeTetromino() {
             }
         }
     }
+
+    const filledRows = findFilledRows();
+    removeFillRows(filledRows);
     generateTetromino();
+    counterScore(filledRows.length);
+}
+
+
+function removeFillRows(filledRows) {
+    for (let i = 0; i < filledRows.length; i++) {
+        const row = filledRows[i]
+        dropRowsAbove(row);
+    }
+}
+
+function dropRowsAbove(rowDelete) {
+    for (let row = rowDelete; row > 0 ; row --) {
+        playfield[row] = playfield[row -1]
+    }
+    playfield[0] = new Array(PLAYFIELD_COLUMNS).fill(0);
+}
+
+function findFilledRows() {
+    const fillRows = [];
+    for (let row = 0; row < PLAYFIELD_ROWS; row++) {
+        let filledColumns = 0;
+        for (let column = 0; column < PLAYFIELD_COLUMNS; column++) {
+            if(playfield[row][column] != 0) {
+                filledColumns++
+            }
+        }
+        if(PLAYFIELD_COLUMNS === filledColumns) {
+            fillRows.push(row)
+        }
+    }
+    return fillRows;
 }
 
 generatePlayField();
@@ -214,10 +277,11 @@ function moveDown() {
 
 let timedId = null
 moveDown();
+
 function startLoop() {
     setTimeout(() => {
-        timedId = requestAnimationFrame(moveDown)
-    },
+            timedId = requestAnimationFrame(moveDown)
+        },
         700)
 }
 

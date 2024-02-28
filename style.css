@@ -30,12 +30,22 @@ body {
 
 }
 
+.scoreTitle{
+    display: flex;
+    color: #0dffff;
+}
+
 .score{
+    padding-left: 10px;
+}
+
+.linesTitle {
+    display: flex;
     color: #0dffff;
 }
 
 .lines{
-    color: #0dffff;
+    padding-left: 20px;
 }
 
 h2{
