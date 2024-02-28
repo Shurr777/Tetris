@@ -5,7 +5,7 @@
 }
 
 body {
-    background-image: url("pngtree-tetris-wallpaper-hd-1080p-picture-image_2779801.jpg");
+    background-image: url("images/pngtree-tetris-wallpaper-hd-1080p-picture-image_2779801.jpg");
     background-size: cover;
     height: 100vh;
     display: flex;
@@ -14,6 +14,28 @@ body {
     align-items: center;
     position: relative;
     text-transform: uppercase;
+}
+
+.gameFieldOverlay{
+    display: grid;
+    grid-template-columns: 4fr 5fr;
+}
+
+.gameFieldInfo{
+    display: flex;
+    flex-direction: column;
+    min-width: 150px;
+    margin-top: 30px;
+    justify-content: start;
+
+}
+
+.score{
+    color: #0dffff;
+}
+
+.lines{
+    color: #0dffff;
 }
 
 h2{
@@ -77,7 +99,7 @@ h2:last-child:hover p{
     gap: 0.5vh;
 }
 
-.grid > div {
+.grid div {
     height: min(4vh, 7vw);
     width: min(4vh, 7vw);
     background-color: rgba(182, 166, 166, 0.2);
@@ -111,3 +133,4 @@ h2:last-child:hover p{
 .grid .T {
     background: linear-gradient(45deg, #9200d3, #01fb47);
 }
+
