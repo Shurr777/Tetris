@@ -52,9 +52,9 @@ let tetromino;
 let score = 0;
 let lines = 0;
 
-function counterScore(destrLines){
+function counterScore(destrLines) {
 
-    switch (destrLines){
+    switch (destrLines) {
         case 1:
             score += 10;
             lines += 1;
@@ -128,8 +128,8 @@ function removeFillRows(filledRows) {
 }
 
 function dropRowsAbove(rowDelete) {
-    for (let row = rowDelete; row > 0 ; row --) {
-        playfield[row] = playfield[row -1]
+    for (let row = rowDelete; row > 0; row--) {
+        playfield[row] = playfield[row - 1]
     }
     playfield[0] = new Array(PLAYFIELD_COLUMNS).fill(0);
 }
@@ -217,21 +217,43 @@ function rotate() {
 document.addEventListener('keydown', onKeyDown);
 
 function onKeyDown(e) {
-    switch (e.key) {
-        case 'ArrowUp':
-            rotate();
-            break;
-        case 'ArrowDown':
-            moveTetrominoDown();
-            break;
-        case 'ArrowLeft':
-            moveTetrominoLeft();
-            break;
-        case 'ArrowRight':
-            moveTetrominoRight();
-            break;
+    if(e.key === 'Escape') {
+        togglePauseGame();
+    }
+    if(!isPaused) {
+        switch (e.key) {
+            case 'ArrowUp':
+                rotate();
+                break;
+            case 'ArrowDown':
+                moveTetrominoDown();
+                break;
+            case 'ArrowLeft':
+                moveTetrominoLeft();
+                break;
+            case 'ArrowRight':
+                moveTetrominoRight();
+                break;
+            case ' ':
+                dropTetraminoDown();
+                break;
+        }
     }
     draw();
+}
+
+function dropTetraminoDown() {
+    while (isValid()) {
+        tetromino.row++;
+    }
+    tetromino.row--;
+}
+
+const overlay = document.querySelector('.overlay')
+
+function gameOver() {
+    stopLoop();
+    overlay.style.display = 'flex'
 }
 
 function rotateMatrix(matrixTetromino) {
@@ -275,19 +297,32 @@ function moveDown() {
     startLoop();
 }
 
+let isGameOver = false
 let timedId = null
 moveDown();
 
 function startLoop() {
-    setTimeout(() => {
-            timedId = requestAnimationFrame(moveDown)
-        },
-        700)
+    timedId = setTimeout(() => {
+        requestAnimationFrame(moveDown)
+    }, 700)
+
 }
 
 function stopLoop() {
     cancelAnimationFrame(timedId);
-    timedId = clearTimeout(timedId);
+    clearTimeout(timedId);
+    timedId = null
+}
+
+let isPaused = false;
+
+function togglePauseGame() {
+    if(isPaused === false) {
+        stopLoop()
+    } else {
+        startLoop()
+    }
+    isPaused = !isPaused;
 }
 
 function isValid() {
@@ -322,21 +357,3 @@ function hasCollisions(row, column) {
         && playfield[tetromino.row + row]?.[tetromino.column + column];
 }
 
-
-/*
-function clearField(){
-    for(let row = PLAYFIELD_ROWS - 1; row > 0; row--){
-        let r = 0;
-        for(let column = 0; column < PLAYFIELD_COLUMNS; column++){
-            if (playfield[row][column]) {r++};
-        }
-        if (r == PLAYFIELD_COLUMNS){
-            console.log('CLEAR');
-            playfield[row].fill(0);
-            for(let row1 = row - 1; row1 > 0; row1--){
-                playfield[row1 + 1] = playfield[row1];
-            }
-            row++;
-        }
-    }
-};*/
