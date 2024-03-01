@@ -1,10 +1,9 @@
-
-
 const PLAYFIELD_COLUMNS = 10;
 const PLAYFIELD_ROWS = 20;
 const btnRestart = document.querySelector('.btn-restart');
 const scoreElement = document.querySelector('.score');
 const linesElement = document.querySelector('.lines');
+const levelElement = document.querySelector('.level');
 const overlay = document.querySelector('.overlay');
 const TETROMINO_NAMES = ['O', 'J', 'L', 'I', 'S', 'Z', 'T']
 const TETROMINOES = {
@@ -50,15 +49,18 @@ const TETROMINOES = {
 let playfield;
 let tetromino;
 let score = 0;
+let tempScore = 0;
 let lines = 0;
+let level = 0;
 let isGameOver = false;
 let timedId = null;
 let isPaused = false;
 let cells;
+let gameSpeed = 700;
 
 init();
 
-function init(){
+function init() {
     isGameOver = false;
     generatePlayField();
     generateTetromino();
@@ -66,38 +68,71 @@ function init(){
     moveDown();
 }
 
-btnRestart.addEventListener('click', function(){
+btnRestart.addEventListener('click', function () {
     document.querySelector('.grid').innerHTML = '';
     overlay.style.display = "none";
     init();
+    levelElement.innerHTML = 0;
+    scoreElement.innerHTML = 0;
+    linesElement.innerHTML = 0;
+    score = 0;
+    lines = 0;
+    level = 0;
+    tempScore = 0;
+    gameSpeed = 700;
 })
 
 function convertPositionToIndex(row, column) {
     return row * PLAYFIELD_COLUMNS + column;
 }
 
+function checkLevel() {
+    console.log("level")
+    console.log("gamespeed after", gameSpeed)
+    console.log("TempScore after", tempScore)
+    if(tempScore / 100 >= 1) {
+        gameSpeed -= 50;
+        tempScore = 0;
+        level += 1;
+        console.log("gamespeed past", gameSpeed)
+        console.log("TempScore past", tempScore)
+        console.log("level past", level)
+    }
+}
+
 function counterScore(destrLines) {
+
 
     switch (destrLines) {
         case 1:
             score += 10;
+            tempScore += 10;
             lines += 1;
+            checkLevel()
             break;
         case 2:
             score += 30;
+            tempScore += 30;
             lines += 2;
+            checkLevel()
             break;
         case 3:
             score += 50;
+            tempScore += 50;
             lines += 3;
+            checkLevel()
             break;
         case 4:
             score += 100;
+            tempScore += 100;
             lines += 4;
+            checkLevel()
             break;
     }
+
     scoreElement.innerHTML = score;
     linesElement.innerHTML = lines;
+    levelElement.innerHTML = level;
 }
 
 function generatePlayField() {
@@ -131,7 +166,7 @@ function placeTetromino() {
     const matrixSize = tetromino.matrix.length;
     for (let row = 0; row < matrixSize; row++) {
         for (let column = 0; column < matrixSize; column++) {
-            if(isOutsideOfTopboard(row)){
+            if(isOutsideOfTopboard(row)) {
                 isGameOver = true;
                 return;
             }
@@ -311,7 +346,9 @@ function moveDown() {
     draw();
     stopLoop();
     startLoop();
-    if(isGameOver){gameOver()}
+    if(isGameOver) {
+        gameOver()
+    }
 }
 
 function gameOver() {
@@ -325,7 +362,7 @@ function startLoop() {
     if(!timedId) {
         timedId = setTimeout(() => {
             requestAnimationFrame(moveDown)
-        }, 700)
+        }, gameSpeed)
     }
 }
 
@@ -349,8 +386,12 @@ function isValid() {
     for (let row = 0; row < matrixSize; row++) {
         for (let column = 0; column < matrixSize; column++) {
             /*if(tetromino.matrix[row][column]) continue;*/
-            if(isOutsideOfGameboard(row, column)) {return false}
-            if(hasCollisions(row, column)) {return false}
+            if(isOutsideOfGameboard(row, column)) {
+                return false
+            }
+            if(hasCollisions(row, column)) {
+                return false
+            }
         }
     }
     return true

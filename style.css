@@ -72,6 +72,10 @@ body {
     padding-left: 20px;
 }
 
+.level{
+    padding-left: 16px;
+}
+
 h2{
     color: #222;
     background: linear-gradient(90deg, #0f0, #1899ff, #f0f, #f00, #ff0 90%);
