@@ -52,10 +52,10 @@ const secondElement = document.querySelector('.seconds')
 const btnPause = document.querySelector('#pause')
 const btnReset = document.querySelector('#restart')
 const btnDrop = document.querySelector('#drop')
-const btnUp = document.querySelector('.arrow-button.up')
-const btnLeft = document.querySelector('.arrow-button.left')
-const btnRight = document.querySelector('.arrow-button.right')
-const btnDown = document.querySelector('.arrow-button.down')
+const btnUp = document.querySelector('.arrow-container.up')
+const btnLeft = document.querySelector('.arrow-container.left')
+const btnRight = document.querySelector('.arrow-container.right')
+const btnDown = document.querySelector('.arrow-container.down')
 const pauseExit = document.querySelector('.overlay.pause')
 const hiScore = document.querySelector('.hiScore')
 
@@ -148,24 +148,26 @@ function restart() {
     level = 0;
     tempScore = 0;
     gameSpeed = 700;
+    this.blur()
 }
 
-btnRestart.addEventListener('click', restart)
+btnRestart.addEventListener('click', () => restart())
 btnPause.addEventListener('click', () => {
     console.log('pause button')
     togglePauseGame()
 })
 
-pauseExit.addEventListener('click', ()=>{
+pauseExit.addEventListener('click', () => {
     togglePauseGame()
 })
 btnReset.addEventListener('click', () => {
     restart()
+
 })
 btnDrop.addEventListener('click', () => {
-    if(!isPaused) {
-        dropTetrominoDown()
-    }
+    console.log('Space')
+    dropTetrominoDown()
+
 })
 btnUp.addEventListener('click', () => {
     if(!isPaused) {
@@ -317,10 +319,8 @@ function drawPlayField() {
     for (let row = 0; row < PLAYFIELD_ROWS; row++) {
         for (let column = 0; column < PLAYFIELD_COLUMNS; column++) {
             if(playfield[row][column] === 0) continue;
-
             const name = playfield[row][column];
             const cellIndex = convertPositionToIndex(row, column);
-            // console.log(cellIndex);
             cells[cellIndex].classList.add(name);
         }
     }
@@ -351,8 +351,6 @@ function draw() {
 
 function rotateTetromino() {
     const oldMatrix = tetromino.matrix;
-   /* const rotatedMatrix = rotateMatrix(tetromino.matrix);*/
-    /*showRotated = rotateMatrix(showRotated);*/
     tetromino.matrix = rotateMatrix(tetromino.matrix);
     if(!isValid()) {
         tetromino.matrix = oldMatrix;
@@ -361,15 +359,11 @@ function rotateTetromino() {
 
 draw();
 
-function rotate() {
-    rotateTetromino();
-    draw()
-}
-
 document.addEventListener('keydown', onKeyDown);
 
 function onKeyDown(e) {
     if(e.key === 'Escape') {
+        e.target.blur()
         togglePauseGame();
     }
     if(!isPaused) {
@@ -401,6 +395,7 @@ function dropTetrominoDown() {
         tetromino.row++;
     }
     tetromino.row--;
+    draw();
 }
 
 function rotateMatrix(matrixTetromino) {
@@ -415,13 +410,18 @@ function rotateMatrix(matrixTetromino) {
     return rotateMatrix
 }
 
+function rotate() {
+    rotateTetromino();
+    draw()
+}
+
 function moveTetrominoDown() {
     tetromino.row++;
     if(!isValid()) {
         tetromino.row--;
         placeTetromino();
     }
-    draw()
+    draw();
 }
 
 function moveTetrominoLeft() {
@@ -429,7 +429,7 @@ function moveTetrominoLeft() {
     if(!isValid()) {
         tetromino.column++
     }
-    draw()
+    draw();
 }
 
 function moveTetrominoRight() {
@@ -437,7 +437,7 @@ function moveTetrominoRight() {
     if(!isValid()) {
         tetromino.column--;
     }
-    draw()
+    draw();
 }
 
 function moveDown() {
@@ -464,6 +464,7 @@ function startLoop() {
             requestAnimationFrame(moveDown)
         }, gameSpeed)
     }
+    this.blur()
 }
 
 function stopLoop() {
@@ -475,8 +476,9 @@ function stopLoop() {
 function togglePauseGame() {
     isPaused = !isPaused;
     isPaused ? stopLoop() : startLoop()
-    isPaused ? pause.style.display = 'flex': pause.style.display = 'none';
+    isPaused ? pause.style.display = 'flex' : pause.style.display = 'none';
     console.log(isPaused)
+    this.blur()
 }
 
 function isValid() {

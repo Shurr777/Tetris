@@ -194,38 +194,50 @@ h3, h4{
 .arrow-btn-block{
     display: flex;
     flex-direction: column;
-    margin-top: 100px;
-    padding-right: 50px;
+    margin-top: 66px;
+    padding-right: 75px;
 }
 
-.arrow-button{
-    background-image: url("./images/5f2d3919-no-bg-preview (carve.photos).png");
+
+
+.arrow-container{
     width: 50px;
     height: 50px;
-    background-position: center;
-    background-size: contain;
-
-    );
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
 }
 
-.btn-up-container{
-    margin: 0 auto;
-    padding-bottom: 3px;
+.arrow-container img{
+    width: 80%;
 }
+
 
 .btn-other-container{
     margin: 0 auto;
+    display: flex;
 }
 
-.arrow-button.up{
-    background-image: url("./images/1000_F_231714973_iSEMwHdiUV9O0c55b7T1dJE9ETQVRRoz.jpg");
+.up{
     transform: rotate(90deg);
+    background: linear-gradient(230deg, #bb4589, #00ff00);
+    margin-bottom: 3px;
+    align-self: center;
 }
-.arrow-button.down{
+
+.left{
+    background: linear-gradient(-40deg, #bb4589, #00ff00);
+}
+
+.down{
     transform: rotate(270deg);
+    background: linear-gradient(50deg, #bb4589, #00ff00);
+    margin: 0 3px;
 }
-.arrow-button.right{
+.right{
     transform: rotate(180deg);
+    background: linear-gradient(140deg, #bb4589, #00ff00);
 }
 
 
