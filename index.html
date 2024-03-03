@@ -14,7 +14,11 @@
 </div>
 <div class="gameFieldOverlay">
     <div class="gameFieldInfo">
-        <div class="scoreTitle">
+        <div class="linesTitle">
+            hi Score &nbsp;
+            <div class="hiScore"></div>
+        </div>
+        <div class="linesTitle">
             Score
             <div class="score">0</div>
         </div>
@@ -26,15 +30,63 @@
             level
             <div class="level">0</div>
         </div>
+        <div class="linesTitle">
+            Time:
+            <div class="timer-overlay">
+                <div class="timer-block">
+                    <div class="hours"></div>
+                </div>
+                <div class="timer-block">
+                    <div class="minutes"></div>
+                </div>
+                <div class="timer-block">
+                    <div class="seconds"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ctrl-buttons">
+            <div class="btn">
+                <button class="addition-button" id="restart">Restart</button>
+                <button class="addition-button" id="pause">Pause</button>
+            </div>
+            <div class="arrow-btn-block">
+                <div class="btn-up-container">
+                    <button class="arrow-button up"></button>
+                </div>
+                <div class="btn-other-container">
+                    <button class="arrow-button left"></button>
+                    <button class="arrow-button down"></button>
+                    <button class="arrow-button right"></button>
+                </div>
+            </div>
+            <div class="btn">
+                <button class="addition-button" id="drop">Drop</button>
+            </div>
+
+        </div>
+
     </div>
     <div class="gridOverlay">
         <div class="grid"></div>
     </div>
+    <div class="control">
+        <div class="control-title">
+            <h3>Designed & created </h3>
+            <!--<h3>Aleksandr Berlizov & </h3>-->
+        </div>
+    </div>
+
 </div>
 <div class="overlay">
-    <button class="btn-restart">
+    <button class="btn-restart addition-button">
         Restart
     </button>
+</div>
+
+<div class="overlay pause">
+    <h2>Pause</h2>
+    <h2>press to continue</h2>
 </div>
 
 <script src="script.js"></script>

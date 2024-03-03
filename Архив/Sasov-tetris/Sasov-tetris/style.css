@@ -1,0 +1,323 @@
+@font-face {
+    font-family: 'Roboto Mono', monospace;
+    src: url(./fonts/RobotoMono-VariableFont_wght.ttf);
+}
+@font-face{
+    font-family: 'Jacquarda Bastarda 9', serif;
+    src: url(./fonts/JacquardaBastarda9-Regular.ttf);
+}
+*{
+    margin: 0;
+}
+body{
+    /* background: linear-gradient(90deg, #7373f2, #24e0e0); */
+    background-image: url(./image/background-dark-11.png);
+    height: 100vh;
+    background-position: center;
+    user-select: none; /* заборона виділення будь-яких обєктів в body */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 20px;
+    font-weight: 900;
+    color: #b7b7b0;
+}
+h1{
+    font-family: 'Jacquarda Bastarda 9', serif;
+    font-weight: 900;
+    font-size: 8vh;
+    text-align: center;
+    background: #FF0000;
+background: radial-gradient(circle farthest-corner at center center, #FF0000 0%, #FFFF00 25%, #05C1FF 50%, #FFFF00 75%, #FF0000 100%);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+}
+h2{
+    font-size: 4.5vh;
+    text-align: center;
+    color: #b7b7b0;
+}
+h6{
+    font-size: 11px;
+    margin-top: 1vh;
+}
+.d-flex {
+    /* background-color: #b7b7b7; */
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-top: 0;
+}
+
+/* Игровое поле - начало */
+.tetris{
+    background-color: #0c0c7d;
+    padding: 1.5vh;
+    border-radius: 1vh;
+    display: grid; /* запуск генератора сеточного поля */
+    grid-template-columns: repeat(15, auto);
+    /* grid-template-rows: repeat(24, auto); ?- необязательный элемент ?*/
+    /* gap: 0.05vh; */
+    box-shadow:
+        inset 1px 1px 3px rgba(255, 255, 255, 0.579),
+        inset -4px -4px 8px rgba(0, 0, 0, 0.451),
+        6px 6px 20px rgba(0, 0, 0, 0.535);    
+}
+.tetris div{
+    width: min(4vh, 7vw);
+    height: min(4vh, 7vw);
+    background-color: rgba(97, 75, 75, 0.2);
+    border-radius: 0.5vh;
+    box-shadow:
+        inset -2px -2px 2px rgba(202, 202, 202, 0.1),
+        inset 4px 4px 4px rgba(0, 0, 0, 0.241);        
+}
+/* Игровые фигуры */
+.tetris .O,
+.tetrisNext .O{
+    background-color: #487806;
+    box-shadow:
+        inset 3px 3px 3px rgba(255, 255, 255, 0.213),
+        inset -3px -3px 3px rgba(88, 4, 22, 0.532),
+        12px 12px 24px rgba(0, 0, 0, 0.6);     
+}
+.tetris .L,
+.tetrisNext .L{
+    background-color: #6f8cf7;
+            box-shadow:
+        inset 3px 3px 3px rgba(255, 255, 255, 0.213),
+        inset -3px -3px 3px rgba(88, 4, 22, 0.532),
+        12px 12px 24px rgba(0, 0, 0, 0.6);     
+}
+.tetris .J,
+.tetrisNext .J{
+    background-color: #b7b7b7;
+    box-shadow:
+        inset 3px 3px 3px rgba(255, 255, 255, 0.213),
+        inset -3px -3px 3px rgba(88, 4, 22, 0.532),
+        12px 12px 24px rgba(0, 0, 0, 0.6);     
+}
+.tetris .S,
+.tetrisNext .S{
+    background-color: #d23108;
+            box-shadow:
+        inset 3px 3px 3px rgba(255, 255, 255, 0.213),
+        inset -3px -3px 3px rgba(88, 4, 22, 0.532),
+        12px 12px 24px rgba(0, 0, 0, 0.6);     
+}
+.tetris .Z,
+.tetrisNext .Z{
+    background-color: #07b9bc;
+            box-shadow:
+        inset 3px 3px 3px rgba(255, 255, 255, 0.213),
+        inset -3px -3px 3px rgba(88, 4, 22, 0.532),
+        12px 12px 24px rgba(0, 0, 0, 0.6);     
+}
+.tetris .T,
+.tetrisNext .T{
+    background-color: #085fda;
+            box-shadow:
+        inset 3px 3px 3px rgba(255, 255, 255, 0.213),
+        inset -3px -3px 3px rgba(88, 4, 22, 0.532),
+        12px 12px 24px rgba(0, 0, 0, 0.6);     
+}
+.tetris .E,
+.tetrisNext .E{
+    background-color: #62f805;
+            box-shadow:
+        inset 3px 3px 3px rgba(255, 255, 255, 0.213),
+        inset -3px -3px 3px rgba(88, 4, 22, 0.532),
+        12px 12px 24px rgba(0, 0, 0, 0.6);     
+}
+.tetris .I,
+.tetrisNext .I{
+    background-color: #c009a2;
+            box-shadow:
+        inset 3px 3px 3px rgba(255, 255, 255, 0.213),
+        inset -3px -3px 3px rgba(88, 4, 22, 0.532),
+        12px 12px 24px rgba(0, 0, 0, 0.6);     
+}
+.tetris .Q,
+.tetrisNext .Q{
+    background-color: #085d77;
+            box-shadow:
+        inset 3px 3px 3px rgba(255, 255, 255, 0.213),
+        inset -3px -3px 3px rgba(88, 4, 22, 0.532),
+        12px 12px 24px rgba(0, 0, 0, 0.6);     
+}
+.tetris .C,
+.tetrisNext .C{
+    background-color: #b90630;
+    box-shadow:
+        inset 3px 3px 3px rgba(255, 255, 255, 0.213),
+        inset -3px -3px 3px rgba(88, 4, 22, 0.532),
+        12px 12px 24px rgba(0, 0, 0, 0.6);     
+}
+/* Игровое поле - конец */
+
+/* ИнфоДоска - начало */
+.scoreboard{
+    background-color: #16135a;
+    border-color: #0c0c7d;
+    border-style: inset;
+    border-width: 1vh;
+    border-radius: 1vh;
+    width: 19.5vw;
+    /* height: min-content; */
+    /* justify-content: space-between; */
+    margin-left: 0.4vw;
+    padding: 1vh 0.6vw;
+    /* box-shadow:
+        inset 1px 1px 3px rgba(255, 255, 255, 0.579),
+        inset -4px -4px 8px rgba(0, 0, 0, 0.451),
+        6px 6px 20px rgba(0, 0, 0, 0.535); */
+        box-shadow:
+        inset -2px -2px 2px rgba(202, 202, 202, 0.1),
+        inset 4px 4px 4px rgba(0, 0, 0, 0.241);
+}
+/* Кнопочный ряд */
+.restartboard,
+.pause-play,
+.Rotate,
+.Left,
+.Right,
+.Down,
+.DropDown{
+    font-size: 2.7vh;
+    margin-top: 2vh;
+    padding: 0.5vh 0.5vw;
+    border: none;
+    border-radius: 10px;
+    background-color: #062b0d;
+    font-weight: 700;
+    color: #b7b7b0;
+    cursor: pointer;
+    margin-top: 1vh;
+    margin-bottom: 1 vh;
+}
+.restartboard,
+.pause-play{
+    width: 9.5vw;
+}
+.Rotate,
+.Left,
+.Right,
+.Down{
+    width: 6vw;
+}
+.DropDown{
+    width: 19.4vw;
+}
+.blockDown{
+   text-align: center;
+}
+
+.restartboard:hover,
+.pause-play:hover,
+.Rotate:hover,
+.Left:hover,
+.Right:hover,
+.Down:hover,
+.DropDown:hover{
+    background-color: #074013;
+}
+
+/* Окно следующей фигуры */
+.tetrisNext{
+    background-color: #0c0c7d;
+    /* background-color: transparent; */
+    width: max-content;
+    margin: 1vh auto;
+    padding: 1vh;
+    border-radius: 1vh;
+    display: grid; /* запуск генератора сеточного поля */
+    grid-template-columns: repeat(4, auto);
+    /* grid-template-rows: repeat(4, auto); */
+    box-shadow:
+        inset 1px 1px 3px rgba(255, 255, 255, 0.579),
+        inset -4px -4px 8px rgba(0, 0, 0, 0.451),
+        6px 6px 20px rgba(0, 0, 0, 0.535);    
+}
+.tetrisNext div{
+    width: min(2.5vh, 5.5vw);
+    height: min(2.5vh, 5.5vw);
+    background-color: rgba(97, 75, 75, 0.2);
+    border-radius: 0.5vh;
+    box-shadow:
+        inset -2px -2px 2px rgba(202, 202, 202, 0.1),
+        inset 4px 4px 4px rgba(0, 0, 0, 0.241);        
+}
+/* ИнфоДоска - конец */
+
+/* Всплывающее окно GameOver - начало */
+.game-over{
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.8);
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    /* display: none; */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    animation: gameOver 1s ease-in;
+}
+@keyframes gameOver {
+    from{
+    width: 0vw;
+    height: 0vh;
+    }
+    to {
+        width: 100vw;
+        height: 100vh;
+    }
+}
+.game-over p{
+    font-size: 10vw;
+    font-weight: 900;
+    color: #b7b7b7;
+    animation: gameOver-p 2s ease-in;
+}
+@keyframes gameOver-p {
+    from{ font-size: 0vw; }
+    to { font-size: 10vw; }
+}
+.game-over p span{
+    font-size: 6vw;
+    animation: gameOver-p-span 2s ease-in;
+}
+@keyframes gameOver-p-span {
+    from{ font-size: 0vw; }
+    to { font-size: 6vw; }
+}
+/* Кнопка перезапуска игры */
+.restart{
+    margin-top: 5vh;
+    padding: 2vh 1.5vw;
+    border: none;
+    border-radius: 10px;
+    background-color: #062b0d;
+    /* text-transform: uppercase; */
+    font-size: 4.3vw;
+    font-weight: 700;
+    color: #b7b7b0;
+    cursor: pointer;
+    animation: restart 3s ease-in;
+}
+.restart > img{
+    animation: restart-img 4s ease-in;
+}
+@keyframes restart {
+    from{ font-size: 0; }
+    to { font-size: 4.3vw; }
+}
+@keyframes restart-img {
+    from{ width: 0; }
+    to { width: 48px; }
+}
+.restart:hover{
+    background-color: #074013;
+}
+/* Всплывающее окно GameOver - конец */

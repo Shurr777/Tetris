@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, pial-scale=1.0">
+    <title>Tetris Game</title>
+    <link rel="shortcut icon" href="./image/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <!-- Основное поле игры -->
+<div class="d-flex">
+    <div class="tetris"></div>
+    
+    <!-- ИнфоДоска -->
+    <div class="scoreboard">
+     <h1>TETRIS</h1>
+<div class="d-flex">
+        <button class="restartboard">Restart Game <br> <img src="./image/icons8-Esc-48.png" alt="button"></button>
+        <button class="pause-play">Pause / Play <br> <img src="./image/icons8-P-48.png" alt="button"></button>
+</div>
+        <p>Best result:&nbsp; <span class="bestscore">0</span></p>
+        <p>Score:&nbsp; <span class="score">0</span></p>
+        <p>Level:&nbsp; <span class="speedDown">0</span></p>
+        <!-- <button class="LevelDown">LevelDown [ 0 ]</button>
+        <button class="LevelUp">LevelUp [ 9 ]</button> -->
+
+    <!-- Поле следующей фигуры -->
+    <h2>Next Figure</h2>
+    <div class="tetrisNext"></div>
+
+    <!-- Поле управляющих клавиш -->
+    <div class="d-flex">
+    <button class="Left"><img src="./image/icons8-Left-48.png" alt="button"> <br> Left </button>
+    <button class="Rotate"><img src="./image/icons8-UP-48.png" alt="button"> <br> Rotate </button>
+    <button class="Right"><img src="./image/icons8-Right-48.png" alt="button"> <br> Right</button>
+    </div>
+    <div class="blockDown">
+    <button class="Down">Down <br> <img src="./image/icons8-Down-48.png" alt="button"></button> <br>
+    <button class="DropDown">DropDown <br> <img src="./image/icons8-Spasebar-80-1.png" alt="button"></button>
+    </div>
+<h6>© 2024 Sasa Sasov. All right reserved.</h6>
+    </div>
+</div>    
+
+<!-- Всплывающее окно game-over -->
+    <div class="game-over">
+        <p>GAME OVER !!!</p>
+         <p class="d-flex">
+             <span>Best result:&nbsp;</span>
+             <span class="game-over-bestscore">0</span>
+         </p>
+        <p class="d-flex">
+            <span>Your score:&nbsp;</span>
+            <span class="game-over-score">0</span>
+        </p>
+
+        <button class="restart"><img src="./image/icons8-Esc-48.png" alt="button"> Restart Game</button>
+    </div>
+    
+    <!-- <script src="./main.js"></script> -->
+    <script src="./mainNext.js"></script>
+    
+</body>
+</html>
